@@ -1,8 +1,6 @@
 ﻿using System.Xml.Serialization;
-using AngleSharp.Common;
-using Microsoft.IdentityModel.Tokens;
 
-namespace ConsoleApp1.Library
+namespace ConsoleApp2.Library
 {
     internal class XmlReader : IReader
     {
@@ -12,7 +10,7 @@ namespace ConsoleApp1.Library
         {
             DepencyInjection(filePath);
 
-            var read = Read(filePath);
+            Car[] read = Read(filePath);
             XmlSerializer serializer = new(typeof(Car[]), new XmlRootAttribute("Document"));
             using FileStream reader = new(filePath, FileMode.Truncate);
             serializer.Serialize(reader, items.Concat(read)
@@ -23,7 +21,7 @@ namespace ConsoleApp1.Library
         {
             DepencyInjection(filePath);
 
-            var read = Read(filePath);
+            Car[] read = Read(filePath);
             XmlSerializer serializer = new(typeof(Car[]), new XmlRootAttribute("Document"));
             using FileStream reader = new(filePath, FileMode.Truncate);
             serializer.Serialize(reader, read
@@ -35,8 +33,8 @@ namespace ConsoleApp1.Library
         {
             DepencyInjection(filePath);
 
-            var read = Read(filePath);
-            var list = items
+            Car[] read = Read(filePath);
+            IEnumerable<string> list = items
                 .Select(item => item.BrandName);
             XmlSerializer serializer = new(typeof(Car[]), new XmlRootAttribute("Document"));
             using FileStream reader = new(filePath, FileMode.OpenOrCreate);
@@ -66,7 +64,7 @@ namespace ConsoleApp1.Library
 
         private void DepencyInjection(string filePath)
         {
-            if (filePath.IsNullOrEmpty())
+            if (string.IsNullOrEmpty(filePath))
             {
                 throw new ArgumentNullException(nameof(filePath));
             }

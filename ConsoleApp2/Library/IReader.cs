@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp1.Library
+﻿namespace ConsoleApp2.Library
 {
     internal interface IReader
     {

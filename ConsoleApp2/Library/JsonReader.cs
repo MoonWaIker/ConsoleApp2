@@ -1,8 +1,7 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace ConsoleApp1.Library
+namespace ConsoleApp2.Library
 {
     internal class JsonReader : IReader
     {
@@ -34,7 +33,7 @@ namespace ConsoleApp1.Library
         {
             DepencyInjection(filePath);
 
-            var list = items
+            IEnumerable<string> list = items
                 .Select(item => item.BrandName);
             var documentObject = new
             {
@@ -52,7 +51,7 @@ namespace ConsoleApp1.Library
 
             string jsonString = File.ReadAllText(filePath);
             return (JObject.Parse(jsonString)["Document"] ?? string.Empty)
-            .Select(car => car.ToObject<Car>() ?? throw new Exception())
+            .Select(car => car.ToObject<Car>() ?? throw new JsonSerializationException())
             .ToArray();
         }
 
@@ -67,7 +66,7 @@ namespace ConsoleApp1.Library
 
         private void DepencyInjection(string filePath)
         {
-            if (filePath.IsNullOrEmpty())
+            if (string.IsNullOrEmpty(filePath))
             {
                 throw new ArgumentNullException(nameof(filePath));
             }
