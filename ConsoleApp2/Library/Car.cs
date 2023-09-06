@@ -9,7 +9,7 @@ namespace ConsoleApp2.Library
         [XmlIgnore]
         private DateTime date;
 
-        public virtual string DateString
+        public virtual string Date
         {
             get => date.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
             set => date = DateTime.Parse(value, CultureInfo.InvariantCulture);
